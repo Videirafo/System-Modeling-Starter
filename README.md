@@ -2,24 +2,52 @@
 
 # System Modeling Starter
 
-**Starter público para transformar problema de negócio em documentação implementável e verificável.**
+**Starter + sistema executável para transformar problema de negócio em documentação implementável, testável e rastreável.**
 
-| Status | Foco | Qualidade |
+| Status | Projeto executável | Qualidade |
 |---|---|---|
-| `v0.1 · foundation` | requirements, arquitetura, dados e contratos | GitHub Actions · docs quality · secret scan |
+| `v0.2` | **Booking Reference System** | GitHub Actions · pytest · docs quality · secret scan |
 
 `requirements` · `UML` · `BPMN` · `C4` · `ERD` · `OpenAPI` · `AsyncAPI` · `ADR` · `traceability`
 
----
+## Clone & Run no VS Code
 
-## Objetivo
+O `Booking Reference System` conecta requisito → regra de negócio → API → teste:
 
-Evitar dois extremos comuns:
+```bash
+git clone https://github.com/Videirafo/System-Modeling-Starter.git
+cd System-Modeling-Starter/examples/booking-reference-system
+code .
+```
 
-1. construir software sem especificação suficiente;
-2. criar documentação bonita que não corresponde ao sistema real.
+Depois de criar o ambiente virtual e instalar `.[dev]`:
 
-Este starter propõe um fluxo simples:
+- **Run and Debug → `Booking: debug FastAPI`**;
+- **Tasks → `Booking: dev server`**;
+- **Tasks → `Booking: pytest`**.
+
+**[Abrir o Booking Reference System →](./examples/booking-reference-system/README.md)**
+
+### Evidência rastreável
+
+```text
+FR / BR / UC
+→ app/domain.py
+→ app/main.py
+→ tests/test_bookings.py
+→ docs/traceability.md
+```
+
+O exemplo implementa:
+
+- `FR-001` criação de agendamento;
+- `FR-002` consulta por identificador;
+- `BR-001` intervalo final posterior ao inicial;
+- `BR-002` bloqueio de sobreposição para profissional no mesmo tenant;
+- `POST /bookings`, `GET /bookings/{id}` e `/health`;
+- testes para happy path, conflito, intervalo inválido e escopo por tenant.
+
+## Método
 
 ```text
 DISCOVER
@@ -36,7 +64,7 @@ DISCOVER
 → DOC SYNC
 ```
 
-## Identificadores recomendados
+## Identificadores
 
 ```text
 FR-###   Functional Requirement
@@ -49,28 +77,23 @@ ADR-###  Architecture Decision Record
 TEST-### Test / Acceptance Scenario
 ```
 
-## Qual diagrama usar?
+## Qual artefato usar?
 
-| Pergunta | Artefato sugerido |
+| Pergunta | Artefato |
 |---|---|
-| Quem usa o sistema e para quê? | UML Use Case |
-| Como um processo atravessa atores/áreas? | BPMN |
+| Quem usa e para quê? | UML Use Case |
+| Como o processo atravessa áreas? | BPMN |
 | Qual o fluxo de decisão? | UML Activity |
 | Quem chama quem e em qual ordem? | UML Sequence |
 | Quais estados existem? | UML State Machine |
 | Quais conceitos e relações existem? | UML Class / ERD |
-| Como o sistema se encaixa no ecossistema? | C4 System Context |
-| Quais apps, serviços e stores compõem o sistema? | C4 Container |
-| Quais módulos internos importam? | C4 Component |
+| Como o sistema se encaixa no ecossistema? | C4 Context |
+| Quais apps/serviços/stores existem? | C4 Container |
 | Como a API HTTP é contratada? | OpenAPI |
-| Como eventos/mensagens são contratados? | AsyncAPI |
-| Por que uma decisão arquitetural foi tomada? | ADR |
-
-O C4 oficial recomenda usar apenas os níveis que agregam valor; para muitas equipes, Context + Container já cobrem a maior parte das necessidades.
+| Como eventos são contratados? | AsyncAPI |
+| Por que a arquitetura escolheu X? | ADR |
 
 ## AS-IS antes de TO-BE
-
-Em sistemas existentes:
 
 ```text
 EVIDENCE
@@ -81,34 +104,23 @@ EVIDENCE
 → CHANGE PLAN
 ```
 
-Não invente endpoints, entidades, regras ou componentes para "completar" um diagrama.
+Em sistema existente, não invente endpoints, entidades ou componentes para preencher diagrama.
 
-## Estrutura do starter
+## Conteúdo técnico
 
-```text
-docs/
-├── METHOD.md
-├── DIAGRAM_SELECTION.md
-└── TRACEABILITY.md
-
-templates/
-├── USE_CASE_TEMPLATE.md
-├── ADR_TEMPLATE.md
-└── TRACEABILITY_MATRIX.md
-
-contracts/
-├── openapi.yaml
-└── asyncapi.yaml
-
-examples/diagrams/
-├── c4-context.mmd
-├── use-case.puml
-└── erd.mmd
-```
+- [Método](./docs/METHOD.md)
+- [Seleção de diagramas](./docs/DIAGRAM_SELECTION.md)
+- [Rastreabilidade](./docs/TRACEABILITY.md)
+- [Caso de Uso](./templates/USE_CASE_TEMPLATE.md)
+- [ADR](./templates/ADR_TEMPLATE.md)
+- [Matriz de rastreabilidade](./templates/TRACEABILITY_MATRIX.md)
+- [OpenAPI starter](./contracts/openapi.yaml)
+- [AsyncAPI starter](./contracts/asyncapi.yaml)
+- [Projetos executáveis](./examples/README.md)
 
 ## Diagram source + render
 
-Sempre que possível mantenha a fonte editável e o render:
+Mantenha fonte editável + render quando possível:
 
 ```text
 diagrams/
@@ -118,47 +130,22 @@ diagrams/
 └── booking-sequence.svg
 ```
 
-Ferramentas possíveis:
+PlantUML, Mermaid e Structurizr DSL são opções adequadas conforme o artefato; Astah continua útil quando `.asta` fizer parte da entrega.
 
-- PlantUML — UML;
-- Mermaid — documentação Markdown e diagramas leves;
-- Structurizr DSL — C4;
-- Astah — quando `.asta` fizer parte da entrega;
-- ferramentas ERD compatíveis com o banco/projeto.
+## Git workflow
 
-## Standards base
-
-O starter acompanha:
-
-- UML 2.5.1 — OMG;
-- BPMN 2.0.2 — OMG;
-- C4 Model — site oficial de Simon Brown;
-- OpenAPI Specification — contratos HTTP;
-- AsyncAPI — contratos event-driven.
-
-## Templates
-
-- [Caso de Uso](./templates/USE_CASE_TEMPLATE.md)
-- [ADR](./templates/ADR_TEMPLATE.md)
-- [Matriz de rastreabilidade](./templates/TRACEABILITY_MATRIX.md)
-
-## Contratos iniciais
-
-- [OpenAPI starter](./contracts/openapi.yaml)
-- [AsyncAPI starter](./contracts/asyncapi.yaml)
-
-## Regra principal
-
-> Documentação deve reduzir ambiguidade e tornar implementação/teste mais verificáveis. Se não muda nenhuma decisão nem ajuda ninguém a entender o sistema, provavelmente não precisa existir.
+```bash
+git checkout -b feat/minha-evolucao
+# altere requisitos/código/testes de forma sincronizada
+git add .
+git commit -m "feat: evolve booking reference system"
+git push -u origin feat/minha-evolucao
+```
 
 ## Segurança
 
-Não publique diagramas de topologia sensível, IPs, secrets, credenciais, requisitos confidenciais ou dados de clientes. Consulte [SECURITY.md](./SECURITY.md).
-
-## Status
-
-**v0.1 — foundation.** Próximas versões devem incluir um exemplo completo requirements → diagrams → contracts → tests.
+Não publique secrets, `.env` real, IPs internos, topologia sensível, requisitos confidenciais, dados de clientes ou código privado. Consulte [SECURITY.md](./SECURITY.md).
 
 ---
 
-Criado por [Fernando Videira](https://github.com/Videirafo) como parte de uma base pública de engenharia de software.
+Criado por [Fernando Videira](https://github.com/Videirafo) como base pública de modelagem e engenharia de software verificável.
