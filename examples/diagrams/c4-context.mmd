@@ -1,0 +1,8 @@
+flowchart LR
+    U[Customer] -->|uses| S[Example SaaS]
+    A[Operator] -->|administers| S
+    S -->|sends notifications| N[Notification Provider]
+    S -->|processes payments| P[Payment Provider]
+
+%% This lightweight Mermaid example communicates a system context.
+%% For strict C4 notation, prefer Structurizr DSL or another C4-aware tool.

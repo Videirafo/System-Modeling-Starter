@@ -1,0 +1,36 @@
+asyncapi: 3.1.0
+info:
+  title: Example Event API
+  version: 0.1.0
+  description: Starter contract for event-driven integration.
+channels:
+  itemCreated:
+    address: items.created
+    messages:
+      itemCreated:
+        $ref: '#/components/messages/ItemCreated'
+operations:
+  publishItemCreated:
+    action: send
+    channel:
+      $ref: '#/channels/itemCreated'
+components:
+  messages:
+    ItemCreated:
+      name: ItemCreated
+      title: Item created
+      contentType: application/json
+      payload:
+        type: object
+        additionalProperties: false
+        required: [eventId, occurredAt, itemId]
+        properties:
+          eventId:
+            type: string
+            format: uuid
+          occurredAt:
+            type: string
+            format: date-time
+          itemId:
+            type: string
+            format: uuid
