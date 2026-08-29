@@ -1,0 +1,6 @@
+flowchart LR
+    U[API Consumer] -->|create / query booking| B[Booking Reference System]
+    B --> R[(In-memory Repository)]
+
+    classDef system fill:#17324d,stroke:#5ce1e6,color:#ffffff;
+    class B system;
