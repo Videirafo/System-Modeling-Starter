@@ -1,0 +1,22 @@
+erDiagram
+    TENANT ||--o{ USER : has
+    TENANT ||--o{ ITEM : owns
+    USER ||--o{ ITEM : creates
+
+    TENANT {
+      uuid id PK
+      string name
+    }
+
+    USER {
+      uuid id PK
+      uuid tenant_id FK
+      string email
+    }
+
+    ITEM {
+      uuid id PK
+      uuid tenant_id FK
+      uuid created_by FK
+      string name
+    }
