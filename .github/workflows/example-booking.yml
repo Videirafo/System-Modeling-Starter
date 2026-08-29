@@ -1,0 +1,35 @@
+name: Example Booking Reference System
+
+on:
+  pull_request:
+    paths:
+      - "examples/booking-reference-system/**"
+      - ".github/workflows/example-booking.yml"
+  push:
+    branches: [main]
+    paths:
+      - "examples/booking-reference-system/**"
+      - ".github/workflows/example-booking.yml"
+
+permissions:
+  contents: read
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: examples/booking-reference-system
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+          cache-dependency-path: examples/booking-reference-system/pyproject.toml
+      - name: Install
+        run: python -m pip install -e ".[dev]"
+      - name: Test
+        run: pytest -q
