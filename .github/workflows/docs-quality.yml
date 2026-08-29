@@ -1,0 +1,49 @@
+name: Docs Quality
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+
+permissions:
+  contents: read
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Required files
+        shell: bash
+        run: |
+          set -euo pipefail
+          test -s README.md
+          test -s SECURITY.md
+          test -s CONTRIBUTING.md
+          test -s docs/METHOD.md
+          test -s docs/DIAGRAM_SELECTION.md
+          test -s docs/TRACEABILITY.md
+          test -s templates/USE_CASE_TEMPLATE.md
+          test -s templates/ADR_TEMPLATE.md
+          test -s templates/TRACEABILITY_MATRIX.md
+          test -s contracts/openapi.yaml
+          test -s contracts/asyncapi.yaml
+
+      - name: Common secret patterns
+        shell: bash
+        run: |
+          set -euo pipefail
+          if grep -RIE --exclude-dir=.git --exclude='*.yml' \
+            '(ghp_[A-Za-z0-9]{20,}|github_pat_[A-Za-z0-9_]{20,}|sk-proj-[A-Za-z0-9_-]{20,}|AKIA[0-9A-Z]{16}|-----BEGIN (RSA |EC |OPENSSH )?PRIVATE KEY-----)' .; then
+            echo 'Potential secret pattern found.'
+            exit 1
+          fi
+
+      - name: Contract version smoke check
+        shell: bash
+        run: |
+          set -euo pipefail
+          grep -q '^openapi: 3.2.0' contracts/openapi.yaml
+          grep -q '^asyncapi: 3.1.0' contracts/asyncapi.yaml
