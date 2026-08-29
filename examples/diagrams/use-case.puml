@@ -1,0 +1,21 @@
+@startuml
+left to right direction
+
+actor Customer
+actor Operator
+actor "Payment Provider" as Payment
+
+rectangle "Example SaaS" {
+  usecase "Create subscription" as UC1
+  usecase "Manage account" as UC2
+  usecase "Review customer account" as UC3
+  usecase "Process payment" as UC4
+}
+
+Customer --> UC1
+Customer --> UC2
+Operator --> UC3
+UC1 .> UC4 : <<include>>
+Payment --> UC4
+
+@enduml
