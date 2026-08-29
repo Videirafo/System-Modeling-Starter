@@ -1,0 +1,24 @@
+[project]
+name = "booking-reference-system"
+version = "0.1.0"
+description = "Executable example connecting requirements, business rules, API and tests"
+requires-python = ">=3.12"
+dependencies = [
+  "fastapi[standard]==0.141.1",
+]
+
+[project.optional-dependencies]
+dev = [
+  "httpx==0.28.1",
+  "pytest==8.4.2",
+]
+
+[tool.setuptools]
+packages = ["app"]
+
+[tool.fastapi]
+entrypoint = "app.main:app"
+
+[tool.pytest.ini_options]
+pythonpath = ["."]
+testpaths = ["tests"]
