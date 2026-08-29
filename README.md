@@ -1,12 +1,14 @@
-<div align="center">
+<p align="center"><img src="./assets/banner.svg" alt="System Modeling Starter banner" width="100%" /></p>
 
 # System Modeling Starter
 
-### Requirements · UML · BPMN · C4 · ERD · OpenAPI · AsyncAPI · ADR · Traceability
-
 **Starter público para transformar problema de negócio em documentação implementável e verificável.**
 
-</div>
+| Status | Foco | Qualidade |
+|---|---|---|
+| `v0.1 · foundation` | requirements, arquitetura, dados e contratos | GitHub Actions · docs quality · secret scan |
+
+`requirements` · `UML` · `BPMN` · `C4` · `ERD` · `OpenAPI` · `AsyncAPI` · `ADR` · `traceability`
 
 ---
 
