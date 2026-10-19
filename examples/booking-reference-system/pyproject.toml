@@ -4,7 +4,7 @@ version = "0.1.0"
 description = "Executable example connecting requirements, business rules, API and tests"
 requires-python = ">=3.12"
 dependencies = [
-  "fastapi[standard]==0.141.1",
+  "fastapi[standard]==0.143.2",
 ]
 
 [project.optional-dependencies]
